@@ -1,0 +1,70 @@
+﻿@using CalzadosBadajoz.Modelo
+@model List<CalzadosBadajoz.Modelo.TZapato>
+
+@{
+    /**/
+
+    ViewBag.Title = "Consultar";
+}
+
+
+<div class="container">
+    <center>
+        <div class="modal-body row" id="modal-champions-body">
+            <div>
+                @foreach (var zapato in Model)
+                {
+                    <div id="@zapato.CodZapato">
+                        <div class="card" style="width: 18rem;">
+                            <img src="@zapato.Imagen" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">@zapato.Nombre</h5>
+                                <p class="card-text">Precio: <small class="text-muted">@zapato.Precio</small><small class="text-muted">€</small></p>
+                                <button href="" class="btn btn-primary">
+                                    @Ajax.ActionLink("Añadir al carrito", "obtenerZapatos", "Zapato", new { CodProducto = @zapato.CodZapato }, new AjaxOptions()
+                                    {
+                                        HttpMethod = "POST",
+                                        OnSuccess = "success",
+                                    }, new { @style = "color:white; text-decoration:none;" })
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div id="@zapato.CodZapato">
+                        <div><img alt="Portada" src=@zapato.Imagen width="200" height="200"></div>
+                        <div>
+                            @Html.ActionLink(@zapato.Nombre, "verZapato", "Zapato", new { CodZapato = @zapato.CodZapato }, new { @class = "text-dark" })
+                        </div>
+                        @{ if (Session["usuario"] != null && ((TUsuario)Session["usuario"]).Rol.Equals("admin"))
+                            {
+                                <div>@Html.ActionLink(" Editar ", "modificarZapato", "Zapato", new { CodZapato = @zapato.CodZapato }, null)</div>
+
+                                <div>
+                                    @Ajax.ActionLink(" Borrar ", "borrarZapato", "Zapato", new { CodZapato = @zapato.CodZapato }, new AjaxOptions()
+                                    {
+                                        HttpMethod = "GET",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "totalZapatos",
+                                    }, new { id = @zapato.CodZapato, onclick = "myFunction(id);" })
+                                </div>
+                            }
+                        }
+                        <div><br /></div>
+                    </div-->
+                }
+            </div>
+            
+        </div>
+    </center>
+</div>
+
+    <script>
+        function myFunction(a) {
+            var list = document.getElementById(a);
+            if (list.hasChildNodes()) {
+                list.parentNode.removeChild(list);
+            }
+        }
+    </script>
+
+<script src="~/JavaScript/ConsultarAgregarCarrito.js"></script>

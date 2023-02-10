@@ -1,0 +1,168 @@
+﻿@using CalzadosBadajoz.Modelo
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CalzadosBadajoz @ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Css/Css.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/">Calzados Badajoz</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="buttons-nav">
+                    <li class="nav-item dropdown">
+                        <button type="button" class="btn btn-info" onclick="consultar()" id="botones-log-sing">Consultar Zapatos</button>
+                        <div class="dropdown-menu">
+                            @{
+                                if (Session["usuario"] != null && ((TUsuario)Session["usuario"]).Rol.Equals("admin"))
+                                {
+                                    <div class="dropdown-item">@Html.ActionLink("Añadir Zapato", "addZapato", "Zapato")</div>
+                                }
+                            }
+                            <div class="dropdown-item">@Html.ActionLink("Consultar", "Consultar", "Zapato")</div>
+                        </div>
+                    </li>
+                    @{
+                        if (Session["usuario"] == null)
+                        {
+                            <li>
+                                <div class="buttons-nav-user">
+                                    <!-- Button trigger modal -->
+                                    <button id="botones-log-sing" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalLogIn">
+                                        Log In
+                                    </button>
+                                    <button id="botones-log-sing" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ModalSignIn">
+                                        Sign In
+                                    </button>
+                                </div>
+                            </li>
+
+
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="ModalLogIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Log In</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <form class="form" role="form" method="post" action="/Inicio/login" accept-charset="UTF-8" id="login-nav">
+                                                        <div class="form-group">
+                                                            <label class="sr-only" for="exampleInputEmail2">Usuario</label>
+                                                            <input name="Nick" type="text" class="form-control" id="exampleInputEmail2" placeholder="Introduce Usuario" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="sr-only" for="exampleInputPassword2">Contraseña</label>
+                                                            <input name="Pass" type="password" class="form-control" id="exampleInputPassword2" placeholder="Introduce Contraseña" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="ModalSignIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Sign In</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <form class="form" role="form" method="post" action="/Inicio/Registro" accept-charset="UTF-8" id="login-nav">
+                                                        <div class="form-group">
+                                                            <label class="sr-only" for="exampleInputEmail2">Usuario</label>
+                                                            <input name="Nick" type="text" class="form-control" id="exampleInputEmail2" placeholder="Introduce Usuario" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="sr-only" for="exampleInputPassword2">Contraseña</label>
+                                                            <input name="Pass" type="password" class="form-control" id="exampleInputPassword2" placeholder="Introduce Contraseña" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#ModalPerfil" id="botones-log-sing">Perfil</button>
+
+                            <div class="modal fade" id="ModalPerfil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div  id="perfil-botones" class="modal-body">
+                                            <button type="button" class="btn btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>
+                                            @if (((TUsuario)Session["usuario"]).Rol.Equals("user"))
+                                            {
+                                                <button type="button" class="btn btn-success" onclick="verFacturas()" id="botones-log-sing">Ver Facturas</button>
+                                            }
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            if (((TUsuario)Session["usuario"]).Rol.Equals("user"))
+                            {
+
+                                <li class="nav-item dropdown">
+                                    <form action="/Zapato/CarroCompra" method="post">
+                                        <button class="btn btn-xs btn-info btn-block" id="botones-log-sing">
+                                            Carrito
+                                            <span class="badge bg-dark" id="numElementsCarrito">0</span>
+                                        </button>
+                                    </form>
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <script type="text/javascript">
+
+        
+    </script>
+
+    @RenderBody()
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+    @Scripts.Render("~/bundles/LibreriaScripts")
+    @RenderSection("scripts", required: false)
+    <script src="~/JavaScript/PlantillaGeneral.js"></script>
+</body>
+</html>

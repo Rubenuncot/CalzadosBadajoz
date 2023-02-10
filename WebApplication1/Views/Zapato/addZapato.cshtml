@@ -1,0 +1,92 @@
+﻿
+@model List<object>
+@using CalzadosBadajoz.Modelo
+
+<h3 style="margin-bottom: 25px; text-align: center;">Añadir Zapato</h3>
+<p class="text-left">Mensaje: <span id="mensaje"></span></p>
+
+<div class="container">
+    <div class="col-md-10">
+        <div class="form-area">
+            <form class="form" method="post" id="my_form" onsubmit="Enviar()">
+                <div class="form-group">
+                    <label for="titulo">Nombre</label>
+                    <input name="Nombre" type="text" maxlength="30" required="3" class="form-control" placeholder="Nombre" id="nombre" />
+                </div>
+                <div class="form-group">
+                    <label for="autor">Marca</label>
+                    <input name="Marca" type="text" maxlength="30" minlength="3" required="" class="form-control" placeholder="Marca" id="marca" />
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input name="Precio" type="text" required="" class="form-control" placeholder="Precio" id="precio" />
+                </div>
+                <div class="form-group">
+                    <label for="imagen">Imagen</label>
+                    <input name="Imagen" type="text" required="" class="form-control" placeholder="Imagen" id="imagen" />
+                </div>
+                <fieldset class="form-group">
+                    <legend>Formato:</legend>
+                    <input type="checkbox" name="Formatouno" value="Piel" id="piel" />Piel <br>
+                    <input type="checkbox" name="Formatodos" value="Goma" id="goma" />Goma<br>
+                    <input type="checkbox" name="Formatotres" value="Cuero" id="cuero" />Cuero<br>
+                </fieldset>
+                <fieldset class="form-group">
+                    <legend>Estado: </legend>
+                    <input type="radio" name="Estado" value="Disponible" id="disponible" />Disponible<br />
+                    <input type="radio" name="Estado" value="Agotado" id="agotado" />Agotado<br />
+                </fieldset>
+                <br>
+                <div class="submit">
+                    <input type="submit" id="botonEnviar" value="Insertar" class="btn btn-primary pull-right" />
+                    <input type="reset" value="Borrar Campos" class="btn btn-danger pull-right" id="button-reset">
+                </div>
+                <div class="ease"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    let $mensaje = document.querySelector('#mensaje');
+
+    function Enviar()
+    {
+        event.preventDefault();
+        var uri = '@Url.Action("addZapato", "Zapato")';
+        var zapato = {};
+        zapato = cargarZapato(zapato);
+        $.ajax({
+            url: uri,
+          data: JSON.stringify(zapato),
+          type: 'POST',
+          success: exito,
+          contentType: 'application/json'
+        });
+    }
+
+    function exito(data) {
+        $mensaje.textContent = data;
+    }
+
+    function cargarZapato(zapato) {
+        zapato.Nombre = document.getElementById("nombre").value;
+        zapato.Marca = document.getElementById("marca").value;
+        zapato.Precio = document.getElementById("precio").value;
+        zapato.Imagen = document.getElementById("imagen").value;
+        if (document.getElementById('cuero').checked)
+            zapato.Formatouno = document.getElementById("cuero").value;
+        if (document.getElementById('piel').checked)
+            zapato.Formatodos = document.getElementById("piel").value;
+        if (document.getElementById('goma').checked)
+                    zapato.Formatodos = document.getElementById("goma").value;
+        zapato.Estado = document.getElementById("disponible").value;
+        zapato.Estado = document.getElementById("agotado").value;
+        return zapato;
+    }
+</script>
+
+
+

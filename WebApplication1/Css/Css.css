@@ -1,0 +1,22 @@
+﻿* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+#login-dp {
+    padding: 20px;
+    background-color: aqua;
+}
+
+#botones-log-sing {
+    cursor: pointer;
+    padding-left: 15px;
+    margin-left: 15px;
+}
+
+#perfil-botones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
