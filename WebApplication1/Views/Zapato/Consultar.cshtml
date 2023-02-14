@@ -21,7 +21,7 @@
                                 <h5 class="card-title">@zapato.Nombre</h5>
                                 <p class="card-text">Precio: <small class="text-muted">@zapato.Precio</small><small class="text-muted">€</small></p>
                                 <button href="" class="btn btn-primary">
-                                    @Ajax.ActionLink("Añadir al carrito", "obtenerZapatos", "Zapato", new { CodProducto = @zapato.CodZapato }, new AjaxOptions()
+                                    @Ajax.ActionLink("Añadir al carrito", "obtenerZapatos", "Zapato", new { CodZapato = @zapato.CodZapato }, new AjaxOptions()
                                     {
                                         HttpMethod = "POST",
                                         OnSuccess = "success",

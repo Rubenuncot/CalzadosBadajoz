@@ -1,8 +1,8 @@
 ﻿let carrito;
-let total = 0;
+let t = 0;
 
 if (localStorage.carrito !== undefined) {
-    carrito = JSON.parse(localStorage.getItem('carrito'));
+    carrito = JSON.parse(localStorage.getItem('carro'));
 }
 
 if (carrito === undefined) {
@@ -19,7 +19,7 @@ function borrarProducto(a) {
 }
 function success(data) {
     anyadirCarrito(data);
-    localStorage.setItem('carrito', JSON.stringify(carrito))
+    localStorage.setItem('carro', JSON.stringify(carrito))
     init();
 }
 
@@ -32,8 +32,8 @@ function anyadirCarrito(dato) {
     else {
         var cantidad = 1;
         for (var i = 0; i < carrito.length; i++) {
-            var codProducto = carrito[i][0].CodProducto;
-            if (codProducto == dato[0].CodProducto && !encontrado) {
+            var codZapato = carrito[i][0].CodZapato;
+            if (codZapato == dato[0].CodZapato && !encontrado) {
                 carrito[i][0].Cantidad++;
                 encontrado = true;
             }

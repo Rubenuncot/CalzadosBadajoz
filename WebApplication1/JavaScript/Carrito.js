@@ -6,91 +6,78 @@
     let $zapatosComprados = [];
     let $contador = 0;
 
-    let carrito;
-    if (localStorage.carrito !== undefined)
-        carrito = JSON.parse(localStorage.carrito);
-    if (carrito === undefined)
-        carrito = []
+    let carro;
+    if (localStorage.carro !== undefined)
+        carro = JSON.parse(localStorage.carro);
+    if (carro === undefined)
+        carro = []
     else
     {
-        renderizarCarrito(carrito);
-        calcularTotal(carrito);
+        renderizarCarrito(carro);
+        calcularTotal(carro);
     }
 
-    function success(data) {
-        anyadirCarrito(data);
-        localStorage.carrito = JSON.stringify(carrito);
-    }
-
-    function anyadirCarrito(dato) {
-        carrito.push(dato);
-        calcularTotal(carrito);
-        renderizarCarrito(carrito);
-    }
-
-    function calcularTotal(carrito) {
+    function calcularTotal(carro) {
         total = 0;
-        for (let miItem of carrito) {
+        for (let miItem of carro) {
             total = total + parseFloat(miItem[0]['Precio']);
         }
         $total.textContent = total.toFixed(2);
-        renderizarCarrito(carrito);
+        renderizarCarrito(carro);
         console.log($carrito.type);
     }
 
-    function renderizarCarrito(carrito) {
+    function renderizarCarrito(carro) {
         $carrito.textContent = '';
         var indice = 0;
-        var cantidad = 0;
-        var zapatoActual = "";
-
-        for (let miItem of carrito)
-        {
-            zapatoActual = `${miItem[0]['Nombre']}`;
-            cantidad = 1;
+        
+        for (let miItem of carro) {
+            console.log(parseInt(miItem[0].Cantidad));
             let miNodo = document.createElement('li');
             miNodo.classList.add('list-group-item', 'text-right');
-            miNodo.textContent = `${zapatoActual} - ${miItem[0]['Precio']}€`
-            miNodo.id = "li-principal" + zapatoActual;
-            console.log()
+            let miImagen = document.createElement('img');
+            miImagen.src = miItem[0]['Imagen'];
+            miImagen.style.width = '100px';
+            let miProducto = document.createElement('span');
+            miProducto.innerHTML = `${parseInt(miItem[0].Cantidad)} - ${miItem[0]['Nombre']} - ${parseInt(miItem[0]['Precio']) * parseInt(miItem[0].Cantidad)}€`;
             let miBoton = document.createElement('button');
             miBoton.classList.add('btn', 'btn-danger', 'mx-5');
             miBoton.textContent = 'X';
             miBoton.setAttribute('posicion', indice);
-            miBoton.setAttribute('nombre', zapatoActual);
-            miBoton.setAttribute('id', "boton"+zapatoActual);
             indice = indice + 1;
             miBoton.addEventListener('click', borrarItemCarrito);
-            let nuevoNodo = document.createElement('li');
-            nuevoNodo.classList.add('list-group-item', 'text-right');
-            nuevoNodo.textContent = `Cantidad: ` + cantidad;
-            nuevoNodo.setAttribute("id", zapatoActual);
+            miNodo.appendChild(miImagen);
+            miNodo.appendChild(miProducto);
             miNodo.appendChild(miBoton);
+            miNodo.style.display = 'flex';
+            miNodo.style.alignItems = 'center';
+            miNodo.style.justifyContent = 'space-between';
             $carrito.appendChild(miNodo);
-            $carrito.appendChild(nuevoNodo);
-            $zapatosComprados.push(zapatoActual);
-            console.log(document.getElementById("li-principal" + zapatoActual));
         }
     }
 
     function borrarItemCarrito() {
-        carrito.splice(this.getAttribute('posicion'), 1);
+        let posicion = this.getAttribute('posicion');
+        carrito.splice(posicion, 1);
         localStorage.removeItem("carrito");
         localStorage.carrito = JSON.stringify(carrito);
         renderizarCarrito(carrito);
         calcularTotal(carrito);
+        init();
     }
 
     function comprar() {
-        var uri = '@Url.Action("comprar", "Zapato")';
-        var lineas = lineasFactura(carrito);
-        $.ajax({
-            url: uri,
-            data: JSON.stringify(lineas),
-            type: 'POST',
-            success: exito,
-            contentType: 'application/json'
-        });
+        if (carro.length > 0) {
+            var uri = '/Zapato/comprar';
+            var lineas = lineasFactura(carro);
+            $.ajax({
+                url: uri,
+                data: JSON.stringify(lineas),
+                type: 'POST',
+                success: exito,
+                contentType: 'application/json'
+            });
+        }
     }
 
     function exito(data) {
@@ -98,11 +85,11 @@
         localStorage.removeItem("carrito");
     }
 
-    function lineasFactura(carrito)
+    function lineasFactura(carro)
     {
         var lineas = [];
         var lf = {};
-        for (let miItem of carrito) {
+        for (let miItem of carro) {
             lf = {};
             lf.Zapato = miItem[0].CodZapato;
             lf.Cantidad = 1;

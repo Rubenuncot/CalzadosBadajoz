@@ -15,7 +15,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Libreria_V6</RootNamespace>
     <AssemblyName>Libreria-V6</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -229,7 +229,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Css\Css.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -243,6 +242,7 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="JavaScript\Carrito.js" />
     <Content Include="JavaScript\ConsultarAgregarCarrito.js" />
+    <Content Include="JavaScript\Inicio.js" />
     <Content Include="JavaScript\PlantillaGeneral.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -266,6 +266,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Css.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -294,6 +295,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\css\" />
     <Folder Include="Content\js\" />
+    <Folder Include="Css\" />
     <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
