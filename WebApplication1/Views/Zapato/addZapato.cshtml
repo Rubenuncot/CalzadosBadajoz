@@ -2,10 +2,11 @@
 @model List<object>
 @using CalzadosBadajoz.Modelo
 
-<h3 style="margin-bottom: 25px; text-align: center;">Añadir Zapato</h3>
-<p class="text-left">Mensaje: <span id="mensaje"></span></p>
 
-<div class="container">
+
+<div class="container" id="addZapato">
+    <h3 style="margin-bottom: 25px; text-align: center;">Añadir Zapato</h3>
+    <p class="text-left">Mensaje: <span id="mensaje"></span></p>
     <div class="col-md-10">
         <div class="form-area">
             <form class="form" method="post" id="my_form" onsubmit="Enviar()">

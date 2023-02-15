@@ -7,8 +7,8 @@
     let $contador = 0;
 
     let carro;
-    if (localStorage.carro !== undefined)
-        carro = JSON.parse(localStorage.carro);
+    if (localStorage.carrito !== undefined)
+        carro = JSON.parse(localStorage.carrito);
     if (carro === undefined)
         carro = []
     else
@@ -35,6 +35,7 @@
             console.log(parseInt(miItem[0].Cantidad));
             let miNodo = document.createElement('li');
             miNodo.classList.add('list-group-item', 'text-right');
+            miNodo.setAttribute("id", "element-carrito")
             let miImagen = document.createElement('img');
             miImagen.src = miItem[0]['Imagen'];
             miImagen.style.width = '100px';
@@ -47,8 +48,10 @@
             indice = indice + 1;
             miBoton.addEventListener('click', borrarItemCarrito);
             miNodo.appendChild(miImagen);
+            miProducto.appendChild(miBoton);
             miNodo.appendChild(miProducto);
-            miNodo.appendChild(miBoton);
+
+            miNodo.style.width = "100%";
             miNodo.style.display = 'flex';
             miNodo.style.alignItems = 'center';
             miNodo.style.justifyContent = 'space-between';
@@ -78,6 +81,7 @@
                 contentType: 'application/json'
             });
         }
+        localStorage.removeItem("carrito");
     }
 
     function exito(data) {

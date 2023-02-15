@@ -15,3 +15,5 @@
     }
     console.log(carrito)
 }
+
+init();

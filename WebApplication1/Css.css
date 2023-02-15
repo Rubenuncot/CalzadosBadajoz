@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body {
+    background-image: url('Comun/zapateria.jpg');
+}
+
 #login-dp {
     padding: 20px;
     background-color: aqua;
@@ -15,8 +19,91 @@
     margin-left: 15px;
 }
 
+#botones-log-sing a{
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+}
+
 #perfil-botones {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+ul{
+    width: 100%;
+}
+
+aside{
+    max-width: 100%;
+    width: 100%;
+}
+
+#element-carrito{
+    width:100%;
+}
+
+.card-zapato {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.zapato{
+    margin: 15px;
+}
+
+inicio{
+    width: 100%;
+    display:grid;
+}
+
+#title{
+    color: white;
+}
+
+#addZapato{
+    color: white;
+}
+
+#botonaniadir{
+    margin-bottom: 15px;
+}
+
+#botonaniadir a {
+    color: white;
+    text-decoration: none;
+}
+
+#botonmodif a{
+    color: red;
+    text-decoration: none;
+}
+#botonmodif a:hover{
+    color: white;
+}
+
+#facturas {
+    color: white;
+}
+
+.facturas{
+    margin: auto;
+    padding: 15px;
+    background-color: white;
+    border-radius: 10%;
+    opacity: 0.8;
+    width: 17%;
+    display:flex;
+    align-items: center;
+    justify-content: center; 
+    flex-wrap: wrap;
+}
+
+.facturas a{
+    margin: auto;
+}
+
+facturas tbody tr td:hover {
+    background-color: rgba(255, 255, 255, 0.5);
 }

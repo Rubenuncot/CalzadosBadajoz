@@ -5,13 +5,15 @@
     Layout = "~/Views/Plantilla/Plantilla.cshtml";
 }
 
-<h2>Facturas</h2>
+<div id="facturas">
+    <h2>Facturas</h2>
+    <div class="facturas">
+        @foreach (TFactura factura in Model)
+        {
 
-@foreach (TFactura factura in Model)
-{
 
-
-    @Html.ActionLink("Factura " + @factura.CodFactura + " con fecha " + @factura.FechaFactura,
-    "detalleFactura", "Usuario", new { CodFactura = @factura.CodFactura }, new { @class = "text-dark" })
-    <br />
-}
+            @Html.ActionLink("-> Factura " + @factura.CodFactura + " con fecha " + @factura.FechaFactura,
+            "detalleFactura", "Usuario", new { CodFactura = @factura.CodFactura }, new { @class = "text-dark" })
+        }
+    </div>
+</div>

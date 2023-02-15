@@ -11,22 +11,32 @@
 <div class="container">
     <center>
         <div class="modal-body row" id="modal-champions-body">
-            <div>
+            <div class="card-zapato">
                 @foreach (var zapato in Model)
                 {
-                    <div id="@zapato.CodZapato">
+                    <div class="zapato" id="@zapato.CodZapato">
                         <div class="card" style="width: 18rem;">
                             <img src="@zapato.Imagen" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title">@zapato.Nombre</h5>
                                 <p class="card-text">Precio: <small class="text-muted">@zapato.Precio</small><small class="text-muted">€</small></p>
-                                <button href="" class="btn btn-primary">
-                                    @Ajax.ActionLink("Añadir al carrito", "obtenerZapatos", "Zapato", new { CodZapato = @zapato.CodZapato }, new AjaxOptions()
-                                    {
-                                        HttpMethod = "POST",
-                                        OnSuccess = "success",
-                                    }, new { @style = "color:white; text-decoration:none;" })
-                                </button>
+                                @if (((TUsuario)Session["usuario"]).Rol.Equals("user"))
+                                {
+                                    <button href="" class="btn btn-primary">
+
+                                        @Ajax.ActionLink("Añadir al carrito", "obtenerZapatos", "Zapato", new { CodZapato = @zapato.CodZapato }, new AjaxOptions()
+                                   {
+                                       HttpMethod = "POST",
+                                       OnSuccess = "success",
+                                   }, new { @style = "color:white; text-decoration:none;" })
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id="botonmodif" class="btn btn-outline-danger">
+                                        @Html.ActionLink("Modificar Zapato", "modificarZapato", "Zapato", new {CodZapato = @zapato.CodZapato}, null)
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>

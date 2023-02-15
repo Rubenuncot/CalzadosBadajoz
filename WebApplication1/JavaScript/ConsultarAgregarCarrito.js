@@ -2,7 +2,7 @@
 let t = 0;
 
 if (localStorage.carrito !== undefined) {
-    carrito = JSON.parse(localStorage.getItem('carro'));
+    carrito = JSON.parse(localStorage.getItem('carrito'));
 }
 
 if (carrito === undefined) {
@@ -19,7 +19,7 @@ function borrarProducto(a) {
 }
 function success(data) {
     anyadirCarrito(data);
-    localStorage.setItem('carro', JSON.stringify(carrito))
+    localStorage.setItem('carrito', JSON.stringify(carrito))
     init();
 }
 

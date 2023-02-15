@@ -20,7 +20,10 @@
             <div class="collapse navbar-collapse " id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0" id="buttons-nav">
                     <li class="nav-item dropdown">
-                        <button type="button" class="btn btn-info" onclick="consultar()" id="botones-log-sing">Consultar Zapatos</button>
+                        @if (Session["usuario"] != null)
+                        {
+                            <button type="button" class="btn btn-info" onclick="consultar()" id="botones-log-sing">Consultar Zapatos</button>
+                        }
                         <div class="dropdown-menu">
                             @{
                                 if (Session["usuario"] != null && ((TUsuario)Session["usuario"]).Rol.Equals("admin"))
@@ -28,7 +31,6 @@
                                     <div class="dropdown-item">@Html.ActionLink("Añadir Zapato", "addZapato", "Zapato")</div>
                                 }
                             }
-                            <div class="dropdown-item">@Html.ActionLink("Consultar", "Consultar", "Zapato")</div>
                         </div>
                     </li>
                     @{
@@ -142,6 +144,14 @@
                                     </button>
                                 </li>
                             }
+                            else
+                            {
+                                <li>
+                                    <button id="botones-log-sing" class="btn btn-success">
+                                        @Html.ActionLink("Añadir Zapato", "addZapato", "Zapato")
+                                    </button>
+                                </li>
+                            }
                         }
                     }
                 </ul>
@@ -161,7 +171,7 @@
                             <div class="container">
                                 <div class="row">
                                     <main id="items" class="col-sm-8 row"></main>
-                                    <aside class="col-sm-6">
+                                    <aside>
                                         <h2>Carrito</h2>
                                         <ul id="carrito" class="list-group"></ul>
                                         <hr>
